@@ -1,0 +1,278 @@
+{
+  "meta": {
+    "lastTouchedVersion": "2026.4.2",
+    "lastTouchedAt": "2026-04-11T05:35:18.756Z"
+  },
+  "wizard": {
+    "lastRunAt": "2026-04-04T19:37:17.510Z",
+    "lastRunVersion": "2026.4.2",
+    "lastRunCommand": "onboard",
+    "lastRunMode": "local"
+  },
+  "models": {
+    "mode": "merge",
+    "providers": {
+      "custom-vibecodingapi-ai": {
+        "baseUrl": "https://vibecodingapi.ai/v1",
+        "apiKey": "sk-0YS15LoAiaJa60UhJXfbitQcyy2aTAoyA3rcxQ7UgVL8cENc",
+        "api": "openai-completions",
+        "models": [
+          {
+            "id": "gpt-5.4",
+            "name": "gpt-5.4 (Custom Provider)",
+            "api": "openai-completions",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 1000000,
+            "maxTokens": 16384
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "custom-vibecodingapi-ai/gpt-5.4"
+      },
+      "models": {
+        "custom-vibecodingapi-ai/gpt-5.4": {}
+      },
+      "workspace": "/home/node/.openclaw/workspace",
+      "compaction": {
+        "mode": "safeguard"
+      },
+      "maxConcurrent": 4,
+      "subagents": {
+        "maxConcurrent": 8
+      }
+    },
+    "list": [
+      {
+        "id": "main",
+        "default": true,
+        "name": "Jarvis",
+        "workspace": "/home/node/.openclaw/workspace"
+      },
+      {
+        "id": "dev",
+        "name": "开发助理",
+        "workspace": "/home/node/.openclaw/workspace-dev"
+      },
+      {
+        "id": "content",
+        "name": "内容助理",
+        "workspace": "/home/node/.openclaw/workspace-content"
+      },
+      {
+        "id": "ops",
+        "name": "运营增长",
+        "workspace": "/home/node/.openclaw/workspace-ops"
+      },
+      {
+        "id": "law",
+        "name": "法务助理",
+        "workspace": "/home/node/.openclaw/workspace-law"
+      },
+      {
+        "id": "finance",
+        "name": "财务助理",
+        "workspace": "/home/node/.openclaw/workspace-finance"
+      }
+    ]
+  },
+  "tools": {
+    "profile": "coding",
+    "web": {
+      "search": {
+        "enabled": true,
+        "provider": "duckduckgo"
+      }
+    },
+    "agentToAgent": {
+      "enabled": true,
+      "allow": [
+        "main",
+        "dev",
+        "content",
+        "ops",
+        "law",
+        "finance"
+      ]
+    }
+  },
+  "commands": {
+    "native": "auto",
+    "nativeSkills": "auto",
+    "restart": true,
+    "ownerDisplay": "raw"
+  },
+  "session": {
+    "dmScope": "per-channel-peer"
+  },
+  "hooks": {
+    "internal": {
+      "enabled": true,
+      "entries": {
+        "boot-md": {
+          "enabled": true
+        },
+        "bootstrap-extra-files": {
+          "enabled": true
+        },
+        "command-logger": {
+          "enabled": true
+        },
+        "session-memory": {
+          "enabled": true
+        }
+      }
+    }
+  },
+  "channels": {
+    "feishu": {
+      "enabled": true,
+      "connectionMode": "websocket",
+      "domain": "feishu",
+      "dmPolicy": "open",
+      "defaultAccount": "main",
+      "accounts": {
+        "main": {
+          "appId": "cli_a94546328378dbef",
+          "appSecret": "bQfdGnSFBqGhbYDm2qW4DfGJ6CZrOjIl",
+          "name": "Jarvis"
+        },
+        "dev": {
+          "appId": "cli_a950b61810f8dbc0",
+          "appSecret": "ep5YGwXn8kn3HLfEDYYhLcm5ksATTWTn",
+          "name": "开发助理"
+        },
+        "content": {
+          "appId": "cli_a950b053d3fadbda",
+          "appSecret": "iqDkkhcLNigtmSNbQX8Cngby76QWIuMe",
+          "name": "内容助理"
+        },
+        "ops": {
+          "appId": "Acli_a950b267aab91bca",
+          "appSecret": "cUeOmMMYP6lo3cjfcfOK00BgfQREoHxI",
+          "name": "运营增长"
+        },
+        "law": {
+          "appId": "cli_a950b3c7cbf9dbc9",
+          "appSecret": "OVv0fCpyFwZyyJXzJ0IMGhPvXVA7dXWL",
+          "name": "法务助理"
+        },
+        "finance": {
+          "appId": "cli_a950b3e1fe791bde",
+          "appSecret": "3mSebzfq64WLWBNH4FOwlgKJLbsDcLnH",
+          "name": "财务助理"
+        }
+      },
+      "groupPolicy": "open"
+    }
+  },
+  "gateway": {
+    "port": 18789,
+    "mode": "local",
+    "bind": "loopback",
+    "controlUi": {
+      "allowedOrigins": [
+        "http://127.0.0.1:18789",
+        "http://localhost:18789"
+      ],
+      "allowInsecureAuth": false
+    },
+    "auth": {
+      "mode": "token",
+      "token": "6512cdf433883a8b39e6e92df916ee5f6398dd1299ebdeb5bf1c1cb67c9ab633",
+      "rateLimit": {
+        "maxAttempts": 10,
+        "windowMs": 60000,
+        "lockoutMs": 300000
+      }
+    },
+    "tailscale": {
+      "mode": "off",
+      "resetOnExit": false
+    },
+    "nodes": {
+      "denyCommands": [
+        "camera.snap",
+        "camera.clip",
+        "screen.record",
+        "contacts.add",
+        "calendar.add",
+        "reminders.add",
+        "sms.send",
+        "sms.search"
+      ]
+    }
+  },
+  "plugins": {
+    "entries": {
+      "duckduckgo": {
+        "enabled": true,
+        "config": {}
+      },
+      "feishu": {
+        "enabled": true,
+        "config": {}
+      }
+    }
+  },
+  "messages": {
+    "ackReactionScope": "group-mentions"
+  },
+  "bindings": [
+    {
+      "agentId": "main",
+      "match": {
+        "channel": "feishu",
+        "accountId": "main"
+      }
+    },
+    {
+      "agentId": "dev",
+      "match": {
+        "channel": "feishu",
+        "accountId": "dev"
+      }
+    },
+    {
+      "agentId": "content",
+      "match": {
+        "channel": "feishu",
+        "accountId": "content"
+      }
+    },
+    {
+      "agentId": "ops",
+      "match": {
+        "channel": "feishu",
+        "accountId": "ops"
+      }
+    },
+    {
+      "agentId": "law",
+      "match": {
+        "channel": "feishu",
+        "accountId": "law"
+      }
+    },
+    {
+      "agentId": "finance",
+      "match": {
+        "channel": "feishu",
+        "accountId": "finance"
+      }
+    }
+  ]
+}

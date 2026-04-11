@@ -1,0 +1,28 @@
+# Sensitive/runtime state
+credentials/
+identity/
+devices/
+logs/
+tasks/
+/memory/
+feishu/
+canvas/
+exec-approvals.json
+update-check.json
+
+# Local OpenClaw runtime state
+**/.openclaw/
+**/.DS_Store
+**/*.sqlite
+**/*.sqlite-shm
+**/*.sqlite-wal
+
+# Nested repos should not persist
+workspace-dev/.git/
+workspace-content/.git/
+workspace-ops/.git/
+workspace-law/.git/
+workspace-finance/.git/
+workspace/.git/
+
+agents/

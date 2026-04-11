@@ -1,0 +1,153 @@
+{
+  "gateway": {
+    "mode": "local",
+    "controlUi": {
+      "allowInsecureAuth": false,
+      "allowedOrigins": [
+        "http://127.0.0.1:18789",
+        "http://localhost:18789"
+      ]
+    },
+    "auth": {
+      "mode": "token",
+      "token": "6512cdf433883a8b39e6e92df916ee5f6398dd1299ebdeb5bf1c1cb67c9ab633",
+      "rateLimit": {
+        "maxAttempts": 10,
+        "windowMs": 60000,
+        "lockoutMs": 300000
+      }
+    },
+    "port": 18789,
+    "bind": "127.0.0.1",
+    "tailscale": {
+      "mode": "off",
+      "resetOnExit": false
+    },
+    "nodes": {
+      "denyCommands": [
+        "camera.snap",
+        "camera.clip",
+        "screen.record",
+        "contacts.add",
+        "calendar.add",
+        "reminders.add",
+        "sms.send",
+        "sms.search"
+      ]
+    }
+  },
+  "agents": {
+    "defaults": {
+      "compaction":{
+      "mode":"safeguard"	
+      },
+      "workspace": "/home/node/.openclaw/workspace",
+      "model": {
+        "primary": "custom-vibecodingapi-ai/gpt-5.4"
+      },
+      "models": {
+        "custom-vibecodingapi-ai/gpt-5.4": {}
+      }
+    }
+  },
+  "session": {
+    "dmScope": "per-channel-peer"
+  },
+  "tools": {
+    "profile": "coding",
+    "web": {
+      "search": {
+        "provider": "duckduckgo",
+        "enabled": true
+      }
+    }
+  },
+  "models": {
+    "mode": "merge",
+    "providers": {
+      "custom-vibecodingapi-ai": {
+        "baseUrl": "https://vibecodingapi.ai/v1",
+        "api": "openai-completions",
+        "apiKey": "sk-0YS15LoAiaJa60UhJXfbitQcyy2aTAoyA3rcxQ7UgVL8cENc",
+        "models": [
+          {
+            "id": "gpt-5.4",
+            "name": "gpt-5.4 (Custom Provider)",
+            "api": "openai-completions",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 1000000,
+            "maxTokens": 16384
+          }
+        ]
+      }
+    }
+  },
+  "channels": {
+    "feishu": {
+      "enabled": true,
+      "connectionMode": "websocket",
+      "domain": "feishu",
+      "dmPolicy": "pairing",
+      "defaultAccount": "main",
+      "accounts": {
+        "main": {
+          "appId": "cli_a94546328378dbef",
+          "appSecret": "bQfdGnSFBqGhbYDm2qW4DfGJ6CZrOjIl",
+          "name": "Jarvis"
+        }
+      },
+      "groupPolicy": "allowlist",
+      "groupAllowFrom": [
+        "oc_0c9c940f206345acbb92b382077c2f37"
+      ]
+    }
+  },
+  "plugins": {
+    "entries": {
+      "duckduckgo": {
+        "enabled": true
+      },
+      "feishu": {
+        "enabled": true
+      }
+    }
+  },
+  "hooks": {
+    "internal": {
+      "enabled": true,
+      "entries": {
+        "boot-md": {
+          "enabled": true
+        },
+        "bootstrap-extra-files": {
+          "enabled": true
+        },
+        "command-logger": {
+          "enabled": true
+        },
+        "session-memory": {
+          "enabled": true
+        }
+      }
+    }
+  },
+  "wizard": {
+    "lastRunAt": "2026-04-04T19:37:17.510Z",
+    "lastRunVersion": "2026.4.2",
+    "lastRunCommand": "onboard",
+    "lastRunMode": "local"
+  },
+  "meta": {
+    "lastTouchedVersion": "2026.4.2",
+    "lastTouchedAt": "2026-04-04T20:15:10.606Z"
+  }
+}
