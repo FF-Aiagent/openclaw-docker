@@ -464,6 +464,18 @@ git push
 
 ### 七、Jarvis 后台调度专职 agent（当前最稳方案）
 
+#### 已验证成功的闭环
+
+该协作模式已完成一次真实验证，闭环如下：
+
+1. 用户私聊 Jarvis 下任务
+2. Jarvis 在后台调用专职 agent（如 `dev/content/ops`）
+3. Jarvis 汇总各 agent 结果
+4. Jarvis 将最终结果发回指定飞书群（使用群 `chat_id`）
+
+这说明当前环境中，这套“单一对外输出者 + 后台多 agent 协作”的方式已经可以实际工作。
+
+
 当前环境下，如果要让 Jarvis 统筹多个专职 agent，最稳的做法不是依赖 `sessions_send`，而是使用 OpenClaw CLI 直接调度指定 agent：
 
 ```bash
