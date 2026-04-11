@@ -460,3 +460,36 @@ git push
 2. 只保留你作为最终对外输出者
 3. 最终按清晰结构整理后再发到目标群聊
 ```
+
+
+### 七、Jarvis 后台调度专职 agent（当前最稳方案）
+
+当前环境下，如果要让 Jarvis 统筹多个专职 agent，最稳的做法不是依赖 `sessions_send`，而是使用 OpenClaw CLI 直接调度指定 agent：
+
+```bash
+openclaw agent --agent dev --message "<任务内容>" --json
+openclaw agent --agent content --message "<任务内容>" --json
+openclaw agent --agent ops --message "<任务内容>" --json
+```
+
+#### 为什么这么做
+
+因为目前高层 `sessions_list / sessions_send` 对专职 agent 的可复用会话暴露还不稳定，而：
+
+- `openclaw agent --agent <id>` 可以直接命中目标 agent
+- 会进入对应 agent 的独立 workspace
+- 会使用对应 agent 的 persona / memory / rules
+- 能返回结构化结果，适合 Jarvis 再汇总
+
+#### 当前推荐实现
+
+- 用户私聊 Jarvis 下任务
+- Jarvis 在后台通过 `openclaw agent --agent <id> --message ... --json` 调用专职 agent
+- Jarvis 汇总各 agent 结果
+- Jarvis 再输出到目标群聊或目标会话
+
+#### 适用场景
+
+- 技术 / 内容 / 运营 / 法务 / 财务分工任务
+- 需要明确角色边界的任务
+- 需要 Jarvis 做统一汇总的任务
