@@ -266,3 +266,154 @@ git push
 - `bindings[].match.accountId = <agentId>`（若与渠道账号一一映射）
 
 这样排错和维护成本最低。
+
+
+---
+
+## 多 Agent + Feishu + Docker 维护 SOP
+
+### 一、新增一个 Agent 的标准步骤
+
+1. 在 `openclaw.json` 中新增 agent：
+
+```json5
+{
+  "agents": {
+    "list": [
+      {
+        "id": "new-agent",
+        "workspace": "/home/node/.openclaw/workspace-new-agent"
+      }
+    ]
+  }
+}
+```
+
+2. 创建对应 workspace 目录：
+
+```bash
+mkdir -p /home/node/.openclaw/workspace-new-agent
+```
+
+3. 初始化最小文件：
+
+- `SOUL.md`
+- `USER.md`
+- `IDENTITY.md`
+- `AGENTS.md`
+- `TOOLS.md`
+- `HEARTBEAT.md`
+- `memory/YYYY-MM-DD.md`
+
+4. 如需接渠道账号，再补 `bindings`
+5. 完成后执行状态检查
+
+---
+
+### 二、新增一个 Feishu 机器人账号的标准步骤
+
+1. 在 `channels.feishu.accounts.<accountId>` 中补充：
+
+- `appId`
+- `appSecret`
+- `name`
+
+2. 增加 `bindings`：
+
+```json5
+{
+  "agentId": "dev",
+  "match": {
+    "channel": "feishu",
+    "accountId": "dev"
+  }
+}
+```
+
+3. 确保 `accountId`、`agentId`、`workspace-<id>` 尽量保持一致
+4. 检查 `dmPolicy` / `groupPolicy` 是否符合当前安全需求
+5. 使用以下命令验证：
+
+```bash
+docker exec -it openclaw-gateway openclaw channels status --probe
+```
+
+---
+
+### 三、修改 workspace 路径时的检查步骤
+
+重点：**在配置中始终写容器路径，不写宿主机路径。**
+
+错误示例：
+
+```text
+/Users/sf/.../workspace-dev
+```
+
+正确示例：
+
+```text
+/home/node/.openclaw/workspace-dev
+```
+
+检查动作：
+
+1. 看 `openclaw.json` 里的 `agents.list[].workspace`
+2. 确认目录在容器内真实存在
+3. 确认宿主机挂载路径能映射到该目录
+4. 必要时记录到 `TOOLS.md`
+
+---
+
+### 四、Git 提交前的自检步骤
+
+在宿主机或容器中确认：
+
+```bash
+cd /home/node/.openclaw
+git status
+```
+
+重点检查：
+
+- 是否误提交 `credentials/`
+- 是否误提交 `logs/`
+- 是否误提交 `identity/`
+- 是否误提交 sqlite / 运行态缓存
+- 是否新增了应记录的重要文档改动
+
+提交：
+
+```bash
+git add .
+git commit -m "your message"
+git push
+```
+
+---
+
+### 五、单个 Feishu 账号异常时的排查顺序
+
+如果出现这种情况：
+
+- 大部分机器人正常
+- 只有一个机器人 `probe failed`
+
+优先排查：
+
+1. `appId` 是否手误
+2. `appSecret` 是否手误
+3. 飞书应用权限是否一致
+4. `accountId` 绑定是否写对
+5. 该 agent 的 workspace 路径是否存在
+
+### 本项目已验证过的一个典型坑
+
+- `ops` 机器人曾出现 `probe failed`
+- 最终原因是 `appId` 手误：
+  - 错误：`Acli_a950b267aab91bca`
+  - 正确：`cli_a950b267aab91bca`
+
+结论：
+
+> 当只有单个 Feishu 机器人异常时，优先检查该账号的 `appId/appSecret` 是否录入错误。
