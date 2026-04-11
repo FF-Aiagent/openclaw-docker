@@ -1,0 +1,268 @@
+# openclaw-docker
+
+SF 的 OpenClaw Docker 工作区仓库。
+
+这个仓库用于统一管理 **OpenClaw 主配置 + 多 Agent workspace 文档与初始化文件**，方便长期维护、回滚和同步。
+
+---
+
+## 仓库目的
+
+这个仓库主要管理三类内容：
+
+1. **OpenClaw 顶层配置**
+   - `openclaw.json`
+   - `openclaw.json.bak*`
+   - `completions/`
+
+2. **主 Agent 与多个专职 Agent 的 workspace 文件**
+   - `workspace/`
+   - `workspace-dev/`
+   - `workspace-content/`
+   - `workspace-ops/`
+   - `workspace-law/`
+   - `workspace-finance/`
+
+3. **长期可复用的文档和角色设定**
+   - `SOUL.md`
+   - `USER.md`
+   - `IDENTITY.md`
+   - `AGENTS.md`
+   - `TOOLS.md`
+   - `memory/*.md`
+   - `skills/`
+
+---
+
+## 多 Agent 结构
+
+当前团队成员：
+
+- **main（Jarvis 🤖）** — 统筹全局、调度团队、汇报结果
+- **dev（开发助理 💻）** — 代码开发、技术架构、部署
+- **content（内容助理 ✍️）** — 公众号文章、文案、内容创作
+- **ops（运营增长 📈）** — 用户增长、社交媒体、市场推广
+- **law（法务助理 ⚖️）** — 合同审查、合规咨询
+- **finance（财务助理 💰）** — 成本核算、预算管理
+
+每个 Agent 都有自己的独立 workspace，用于隔离：
+
+- persona / identity
+- 用户资料
+- 记忆文件
+- 任务上下文
+- 专业分工
+
+---
+
+## 目录结构
+
+```text
+/home/node/.openclaw
+├── openclaw.json
+├── completions/
+├── workspace/                # main / Jarvis
+├── workspace-dev/            # dev
+├── workspace-content/        # content
+├── workspace-ops/            # ops
+├── workspace-law/            # law
+├── workspace-finance/        # finance
+└── .gitignore
+```
+
+说明：
+
+- `workspace/` 是主协调 Agent `main (Jarvis)` 的工作区
+- 其他 `workspace-*` 是各专职 Agent 的独立工作区
+- 所有这些 workspace 现在都由**同一个上层 git 仓库**统一管理
+
+---
+
+## Docker 路径映射
+
+OpenClaw 运行在 Docker 容器中。
+
+### 宿主机路径（macOS）
+
+```text
+/Users/sf/projects/AI_code/openclaw/docker_openclaw/data/openclaw/.openclaw
+```
+
+### 容器内路径
+
+```text
+/home/node/.openclaw
+```
+
+### 典型映射示例
+
+- Host `.../.openclaw/workspace` ↔ Container `/home/node/.openclaw/workspace`
+- Host `.../.openclaw/workspace-dev` ↔ Container `/home/node/.openclaw/workspace-dev`
+- Host `.../.openclaw/workspace-content` ↔ Container `/home/node/.openclaw/workspace-content`
+- Host `.../.openclaw/workspace-ops` ↔ Container `/home/node/.openclaw/workspace-ops`
+- Host `.../.openclaw/workspace-law` ↔ Container `/home/node/.openclaw/workspace-law`
+- Host `.../.openclaw/workspace-finance` ↔ Container `/home/node/.openclaw/workspace-finance`
+
+### 重要规则
+
+当在 OpenClaw 运行环境中编辑 `openclaw.json` 时：
+
+- `agents.list[].workspace` 必须填写 **容器内路径**
+- 不要填写宿主机 `/Users/...` 路径
+
+正确示例：
+
+```json5
+{
+  "agents": {
+    "list": [
+      {
+        "id": "dev",
+        "workspace": "/home/node/.openclaw/workspace-dev"
+      }
+    ]
+  }
+}
+```
+
+---
+
+## Git 管理原则
+
+这个仓库当前采用的是：
+
+- **统一仓库根目录：** `/home/node/.openclaw`
+- **统一管理所有 workspace**
+- **不允许 workspace 内再嵌套独立 git 仓库**
+
+也就是说：
+
+- `workspace/`
+- `workspace-dev/`
+- `workspace-content/`
+- `workspace-ops/`
+- `workspace-law/`
+- `workspace-finance/`
+
+都属于同一个 repo。
+
+---
+
+## 哪些内容会进 Git
+
+会进 Git 的内容：
+
+- 配置文件
+- 各 workspace 的初始化文件
+- Agent 角色定义
+- 用户偏好文档
+- 长期有价值的记忆 markdown
+- 技能文件和本地说明文档
+
+适合版本化的典型文件：
+
+- `SOUL.md`
+- `USER.md`
+- `IDENTITY.md`
+- `AGENTS.md`
+- `TOOLS.md`
+- `memory/YYYY-MM-DD.md`
+- `skills/...`
+
+---
+
+## 哪些内容不会进 Git
+
+以下内容属于运行态、敏感信息或纯缓存，已通过 `.gitignore` 排除：
+
+- `credentials/`
+- `identity/`
+- `devices/`
+- `logs/`
+- `tasks/`
+- 顶层运行态 `memory/`
+- `feishu/`
+- `exec-approvals.json`
+- `*.sqlite`
+- `**/.openclaw/`
+
+### 原因
+
+这些内容通常包含：
+
+- 密钥 / 凭据
+- 设备配对信息
+- 日志和缓存
+- 数据库
+- 会话运行态文件
+
+它们不适合进入公开或长期版本控制历史。
+
+---
+
+## 常见维护动作
+
+### 查看仓库状态
+
+```bash
+cd /home/node/.openclaw
+git status
+```
+
+### 提交变更
+
+```bash
+git add .
+git commit -m "your message"
+```
+
+### 推送到 GitHub
+
+```bash
+git push
+```
+
+---
+
+## 初始化与协作约定
+
+每个 Agent workspace 建议至少包含：
+
+- `SOUL.md` — 角色定位与工作风格
+- `USER.md` — 服务对象信息
+- `IDENTITY.md` — 自我身份
+- `AGENTS.md` — 团队通讯录与协作方式
+- `TOOLS.md` — 本地环境说明
+- `memory/YYYY-MM-DD.md` — 每日关键记录
+
+### 记录原则
+
+- 重要事项：写入对应长期文档
+- 重要过程：写入 daily memory
+- 环境规则 / 路径映射 / 踩坑经验：优先写入 `TOOLS.md`
+- 用户偏好：写入 `USER.md`
+
+---
+
+## 当前仓库用途总结
+
+这是一个面向 **OpenClaw + Docker + 多 Agent + 多 Feishu 机器人** 的工作区仓库。
+
+它的核心目标不是存一切，而是：
+
+- 稳定保存配置
+- 保存角色初始化
+- 保存长期有价值的工作文档
+- 避免路径、workspace、git 管理再次混乱
+
+---
+
+## 备注
+
+如果后续继续扩 Agent，建议沿用现有命名方式：
+
+- `workspace-<agentId>`
+- `agents.list[].id = <agentId>`
+- `bindings[].match.accountId = <agentId>`（若与渠道账号一一映射）
+
+这样排错和维护成本最低。
