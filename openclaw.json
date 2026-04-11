@@ -236,6 +236,16 @@
       "agentId": "main",
       "match": {
         "channel": "feishu",
+        "peer": {
+          "kind": "group",
+          "id": "oc_0c9c940f206345acbb92b382077c2f37"
+        }
+      }
+    },
+    {
+      "agentId": "main",
+      "match": {
+        "channel": "feishu",
         "accountId": "main"
       }
     },
