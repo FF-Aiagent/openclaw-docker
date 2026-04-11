@@ -1,40 +1,18 @@
-# TOOLS.md - Local Notes
+# TOOLS.md - 内容助理本地说明
 
-Skills define _how_ tools work. This file is for _your_ specifics — the stuff that's unique to your setup.
+这个文件记录 **内容助理** 专用的表达规范、平台差异和长期有效的写作注意事项。
 
-## What Goes Here
+## 建议记录的内容
 
-Things like:
+- 不同平台的写作风格区别
+- 常用内容模板
+- 标题风格偏好
+- 公众号、社交媒体、产品文案的格式约定
+- 用户长期反馈中稳定有效的表达方式
 
-- Camera names and locations
-- SSH hosts and aliases
-- Preferred voices for TTS
-- Speaker/room names
-- Device nicknames
-- Anything environment-specific
+## 建议沉淀到这里的经验
 
-## Examples
-
-```markdown
-### Cameras
-
-- living-room → Main area, 180° wide angle
-- front-door → Entrance, motion-triggered
-
-### SSH
-
-- home-server → 192.168.1.100, user: admin
-
-### TTS
-
-- Preferred voice: "Nova" (warm, slightly British)
-- Default speaker: Kitchen HomePod
-```
-
-## Why Separate?
-
-Skills are shared. Your setup is yours. Keeping them apart means you can update skills without losing your notes, and share skills without leaking your infrastructure.
-
----
-
-Add whatever helps you do your job. This is your cheat sheet.
+- 哪种标题风格更符合 SF 偏好
+- 哪类表达容易太“AI味”
+- 哪种文章结构更适合公众号
+- 哪种内容适合短版 / 长版 / 摘要版

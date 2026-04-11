@@ -1,40 +1,18 @@
-# TOOLS.md - Local Notes
+# TOOLS.md - 法务助理本地说明
 
-Skills define _how_ tools work. This file is for _your_ specifics — the stuff that's unique to your setup.
+这个文件记录 **法务助理** 专用的审阅习惯、风险分类方式和长期有效的判断边界。
 
-## What Goes Here
+## 建议记录的内容
 
-Things like:
+- 合同审阅清单
+- 高/中/低风险判定习惯
+- 常见合作协议风险点
+- 对外表述中容易踩雷的敏感点
+- 需要提醒人工律师复核的典型场景
 
-- Camera names and locations
-- SSH hosts and aliases
-- Preferred voices for TTS
-- Speaker/room names
-- Device nicknames
-- Anything environment-specific
+## 建议沉淀到这里的经验
 
-## Examples
-
-```markdown
-### Cameras
-
-- living-room → Main area, 180° wide angle
-- front-door → Entrance, motion-triggered
-
-### SSH
-
-- home-server → 192.168.1.100, user: admin
-
-### TTS
-
-- Preferred voice: "Nova" (warm, slightly British)
-- Default speaker: Kitchen HomePod
-```
-
-## Why Separate?
-
-Skills are shared. Your setup is yours. Keeping them apart means you can update skills without losing your notes, and share skills without leaking your infrastructure.
-
----
-
-Add whatever helps you do your job. This is your cheat sheet.
+- 哪类条款最常出问题
+- 哪类情形必须明确加风险提示
+- 哪些表达需要避免说得过于确定
+- 不同业务合作里常见的责任边界问题

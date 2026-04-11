@@ -1,40 +1,18 @@
-# TOOLS.md - Local Notes
+# TOOLS.md - 财务助理本地说明
 
-Skills define _how_ tools work. This file is for _your_ specifics — the stuff that's unique to your setup.
+这个文件记录 **财务助理** 专用的核算口径、表格习惯和长期有效的数字处理规则。
 
-## What Goes Here
+## 建议记录的内容
 
-Things like:
+- 成本、收入、利润的口径定义
+- 常用表格模板
+- 预算跟踪规则
+- API / SaaS / 云资源成本归类方式
+- 常见数字核对流程
 
-- Camera names and locations
-- SSH hosts and aliases
-- Preferred voices for TTS
-- Speaker/room names
-- Device nicknames
-- Anything environment-specific
+## 建议沉淀到这里的经验
 
-## Examples
-
-```markdown
-### Cameras
-
-- living-room → Main area, 180° wide angle
-- front-door → Entrance, motion-triggered
-
-### SSH
-
-- home-server → 192.168.1.100, user: admin
-
-### TTS
-
-- Preferred voice: "Nova" (warm, slightly British)
-- Default speaker: Kitchen HomePod
-```
-
-## Why Separate?
-
-Skills are shared. Your setup is yours. Keeping them apart means you can update skills without losing your notes, and share skills without leaking your infrastructure.
-
----
-
-Add whatever helps you do your job. This is your cheat sheet.
+- 哪些口径最容易混淆
+- 哪些数字必须单独核对
+- 哪类成本适合按项目、按月、按功能归类
+- 做预算和复盘时应优先保留哪些字段

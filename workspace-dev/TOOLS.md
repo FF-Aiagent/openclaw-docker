@@ -1,40 +1,31 @@
-# TOOLS.md - Local Notes
+# TOOLS.md - 开发助理本地说明
 
-Skills define _how_ tools work. This file is for _your_ specifics — the stuff that's unique to your setup.
+这个文件记录 **开发助理** 专用的环境信息、技术规则和可复用操作习惯。
 
-## What Goes Here
+## 建议记录的内容
 
-Things like:
+- 常用开发环境
+- 部署平台信息（Cloudflare / Docker / Node / Vite / Bun 等）
+- API 对接注意事项
+- 容器路径与宿主机路径映射
+- 常见报错与排查结论
+- 已验证可用的命令
 
-- Camera names and locations
-- SSH hosts and aliases
-- Preferred voices for TTS
-- Speaker/room names
-- Device nicknames
-- Anything environment-specific
+## 当前环境重点
 
-## Examples
+### Docker 路径映射
 
-```markdown
-### Cameras
+- Host base path: `/Users/sf/projects/AI_code/openclaw/docker_openclaw/data/openclaw/.openclaw`
+- Container base path: `/home/node/.openclaw`
 
-- living-room → Main area, 180° wide angle
-- front-door → Entrance, motion-triggered
+关键原则：
 
-### SSH
+- 配置文件里使用 **容器路径**
+- 不要在 `openclaw.json` 里写宿主机 `/Users/...` 路径
 
-- home-server → 192.168.1.100, user: admin
+## 建议沉淀到这里的经验
 
-### TTS
-
-- Preferred voice: "Nova" (warm, slightly British)
-- Default speaker: Kitchen HomePod
-```
-
-## Why Separate?
-
-Skills are shared. Your setup is yours. Keeping them apart means you can update skills without losing your notes, and share skills without leaking your infrastructure.
-
----
-
-Add whatever helps you do your job. This is your cheat sheet.
+- 某个部署命令已验证可用
+- 某个配置字段的正确写法
+- 某类报错的真实原因与修复方式
+- 与 Docker、Git、OpenClaw、Cloudflare 相关的环境坑
