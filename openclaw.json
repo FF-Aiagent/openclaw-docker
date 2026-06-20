@@ -14,7 +14,7 @@
     "providers": {
       "custom-vibecodingapi-ai": {
         "baseUrl": "https://vibecodingapi.ai/v1",
-        "apiKey": "sk-0YS15LoAiaJa60UhJXfbitQcyy2aTAoyA3rcxQ7UgVL8cENc",
+        "apiKey": "sk-***REDACTED***",
         "api": "openai-completions",
         "models": [
           {

@@ -68,7 +68,7 @@
       "custom-vibecodingapi-ai": {
         "baseUrl": "https://vibecodingapi.ai/v1",
         "api": "openai-completions",
-        "apiKey": "sk-0YS15LoAiaJa60UhJXfbitQcyy2aTAoyA3rcxQ7UgVL8cENc",
+        "apiKey": "sk-***REDACTED***",
         "models": [
           {
             "id": "gpt-5.4",
